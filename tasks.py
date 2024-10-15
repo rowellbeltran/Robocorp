@@ -7,7 +7,7 @@ from RPA.Archive import Archive
 from datetime import datetime
 import os
 
-curr_work_dir = "output/receipts_" + datetime.today().strftime('%Y_%m_%d') + "/"
+curr_work_dir = "output/receipts_" + datetime.today().strftime('%Y%m%d_%H%M%S') + "/"
 
 @task
 def order_robots_from_RobotSpareBin():
@@ -21,8 +21,9 @@ def order_robots_from_RobotSpareBin():
     browser.configure(
         slowmo=500,
     )
-    
+
     os.mkdir(curr_work_dir)
+
     open_sparebin_website()
     submit_orders(get_orders())    
     archive_receipts()
@@ -111,4 +112,4 @@ def embed_screenshot_to_receipt(screenshot, pdf_file):
 
 def archive_receipts():
     archive = Archive()
-    archive.archive_folder_with_zip(curr_work_dir, "output/receipts_" + datetime.today().strftime('%Y_%m_%d') + ".zip", include="*.pdf")
+    archive.archive_folder_with_zip(curr_work_dir, "output/receipts_" + datetime.today().strftime('%Y%m%d_%H%M%S') + ".zip", include="*receipt*")
